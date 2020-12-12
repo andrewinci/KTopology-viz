@@ -10,6 +10,6 @@ fun saveTopologyImage(topology: String, outFilePath: String) =
         .mapCatching { Graphviz.fromString(it).width(1600).render(Format.PNG).toFile(File(outFilePath)) }
 
 
-fun plotTopology(topology: String) =
+fun renderTopology(topology: String) =
     runCatching { convertTopologyToDot(topology) }
         .mapCatching { Graphviz.fromString(it).render(Format.SVG).toImage() }

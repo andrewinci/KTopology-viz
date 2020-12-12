@@ -12,7 +12,7 @@ class Library : FreeSpec({
 
         "Render to buffered image" {
             // act
-            val result = plotTopology(topology)
+            val result = renderTopology(topology)
             // assert
             result shouldNotBe null
         }
