@@ -1,5 +1,8 @@
+import java.net.URI
+
 plugins {
     id("org.jetbrains.kotlin.jvm") version "1.4.0"
+    `maven-publish`
     `java-library`
 }
 
@@ -30,4 +33,22 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "KTopologyViz" //  optional target repository name
+            url = URI("https://maven.pkg.github.com/andrea-vinci/KTopology-viz")
+            credentials {
+                username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")
+            }
+        }
+    }
+    publications {
+        register<MavenPublication>("gpr") {
+            from(components["java"])
+        }
+    }
 }
