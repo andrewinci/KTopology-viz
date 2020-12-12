@@ -1,6 +1,8 @@
 # Kafka topology viz
 
-A port from https://raw.githubusercontent.com/zz85/kafka-streams-viz to render a topology description to an image in kotlin.
+Render kafka stream topology into an image
+
+A porting to Kotlin from https://raw.githubusercontent.com/zz85/kafka-streams-viz.
 
 ![K Topology Viz](./assets/KTopologyViz.png)
 
@@ -24,3 +26,7 @@ renderTopology(topologyDescription)
 ## Credits
 Parsing logic ported from: [zz85/kafka-streams-viz](https://raw.githubusercontent.com/zz85/kafka-streams-viz)  
 Render **dot** files with: [nidi3/graphviz-java](https://github.com/nidi3/graphviz-java)
+
+## License
+
+MIT
