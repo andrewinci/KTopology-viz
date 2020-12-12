@@ -38,8 +38,9 @@ tasks.withType<Test> {
 publishing {
     repositories {
         maven {
-            name = "KTopologyViz" //  optional target repository name
+            name = "ktopologyviz" //  optional target repository name
             url = URI("https://maven.pkg.github.com/andrea-vinci/KTopology-viz")
+            version = System.getenv("RELEASE_VERSION")
             credentials {
                 username = project.findProperty("gpr.user") as String? ?: System.getenv("USERNAME")
                 password = project.findProperty("gpr.key") as String? ?: System.getenv("TOKEN")

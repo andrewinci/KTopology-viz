@@ -1,2 +1,2 @@
 rootProject.name = "KTopologyViz"
-include("lib")
+include("ktopologyviz")

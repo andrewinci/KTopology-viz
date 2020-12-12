@@ -1,4 +1,3 @@
-
 package ktopologyviz
 
 import guru.nidi.graphviz.engine.Format

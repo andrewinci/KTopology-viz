@@ -1,0 +1,36 @@
+name: Build and publish
+
+on:
+  push:
+    tags:
+      - '*.*.*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - uses: battila7/get-version-action@v2
+        id: get_version
+      - name: Setup Java JDK
+        uses: actions/setup-java@v1.4.3
+        with:
+          java-version: 14
+          java-package: jdk
+      - name: Cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: ${{ runner.os }}-gradle-
+      - name: Build and run tests
+        run: "./gradlew check --no-daemon"
+      - name: Publish maven package
+        run: "./gradlew publish --no-daemon"
+        env:
+          USERNAME: andrea-vinci
+          TOKEN: ${{ secrets.GITHUBTOKEN }}
+          RELEASE_VERSION: ${{ steps.get_version.outputs.version }}
