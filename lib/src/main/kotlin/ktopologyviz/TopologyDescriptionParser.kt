@@ -8,13 +8,13 @@ fun processName(name: String): String {
 }
 
 // converts kafka stream ascii topology description to DOT language
-fun convertTopologyToDot(topology: String) : String {
+fun convertTopologyToDot(topology: String): String {
     val lines = topology.split('\n').map { it.trim() }
     val results = arrayListOf<String>()
     val outside = arrayListOf<String>()
     val stores = arrayListOf<String>()
     val topics = arrayListOf<String>()
-    var entityName: String? = null;
+    var entityName: String? = null
 
     // dirty but quick parsing
     for (line in lines) {
@@ -23,12 +23,14 @@ fun convertTopologyToDot(topology: String) : String {
 
         if (match != null) {
             if (results.size != 0) results.add("}")
-            results.add("""subgraph cluster_${match[1]} {
+            results.add(
+                """subgraph cluster_${match[1]} {
                 label="${match[0]}";
                 style=filled;
                 color=lightgrey;
                 node [style=filled,color=white];
-                """)
+                """
+            )
             continue
         }
 
@@ -46,11 +48,11 @@ fun convertTopologyToDot(topology: String) : String {
                 } else if (type == "topics") {
                     // from
                     outside.add(""""$linkedName" -> "$entityName";""")
-                    topics.add(linkedName);
+                    topics.add(linkedName)
                 } else if (type == "topic") {
                     // to
                     outside.add(""""$entityName" -> "$linkedName";""")
-                    topics.add(linkedName);
+                    topics.add(linkedName)
                 } else if (type == "stores") {
                     if (entityName.contains("JOIN")) {
                         outside.add(""""$linkedName" -> "$entityName";""")
@@ -67,11 +69,11 @@ fun convertTopologyToDot(topology: String) : String {
         match = arrows.matchEntire(line)?.groupValues
 
         if (match != null && entityName != null) {
-            val targets = match[1];
+            val targets = match[1]
             for (name in targets.split(',')) {
-                val linkedName = processName(name.trim());
+                val linkedName = processName(name.trim())
                 if (linkedName == "none") continue
-                results.add(""""$entityName" -> "$linkedName";""");
+                results.add(""""$entityName" -> "$linkedName";""")
             }
         }
     }
@@ -80,11 +82,11 @@ fun convertTopologyToDot(topology: String) : String {
 
     val res = results.plus(outside).toMutableList()
 
-    stores.forEach{node ->
+    stores.forEach { node ->
         res.add(""""$node" [shape=cylinder];""")
     }
 
-    topics.forEach{node ->
+    topics.forEach { node ->
         res.add(""""$node" [shape=rect];""")
     }
 

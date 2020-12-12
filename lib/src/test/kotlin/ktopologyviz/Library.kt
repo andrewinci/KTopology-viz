@@ -6,7 +6,7 @@ import java.nio.file.Paths
 
 class Library : FreeSpec({
 
-    "Happy path" -  {
+    "Happy path" - {
         // arrange
         val topology = Paths.get("src", "test", "resources", "topologies", "complex.txt").toFile().readText()
 
@@ -25,5 +25,4 @@ class Library : FreeSpec({
             result shouldNotBe null
         }
     }
-
 })
