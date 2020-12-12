@@ -1,0 +1,17 @@
+digraph G {
+    label = "Kafka Streams Topology"
+    subgraph cluster_0 {
+        label="Sub-topology: 0";
+        style=filled;
+        color=lightgrey;
+        node [style=filled,color=white];
+
+        "KSTREAM-SOURCE-0000000000" -> "KSTREAM-MAP-0000000001";
+        "KSTREAM-MAP-0000000001" -> "KSTREAM-SINK-0000000002";
+    }
+
+    "input-topic" -> "KSTREAM-SOURCE-0000000000";
+    "KSTREAM-SINK-0000000002" -> "output-topic";
+    "input-topic" [shape=rect];
+    "output-topic" [shape=rect];
+}
